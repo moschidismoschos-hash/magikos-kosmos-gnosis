@@ -133,6 +133,12 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
+    var match_game := Button.new()
+    match_game.text = "🧠 Ταίριαξε γράμμα και εικόνα"
+    match_game.custom_minimum_size = Vector2(250, 58)
+    match_game.pressed.connect(func(): get_tree().change_scene_to_file("res://alphabet_match.tscn"))
+    center.add_child(match_game)
+
 func _set_language(value: String) -> void:
     language = value
     current = greek if value == "el" else english
