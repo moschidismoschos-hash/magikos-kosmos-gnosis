@@ -1,36 +1,32 @@
 extends Control
 
-var colors := [
-    {"gr":"Κόκκινο","en":"Red","hex":"#e53935","example_gr":"Μήλο","example_en":"Apple","emoji":"🍎"},
-    {"gr":"Μπλε","en":"Blue","hex":"#1e88e5","example_gr":"Θάλασσα","example_en":"Sea","emoji":"🌊"},
-    {"gr":"Κίτρινο","en":"Yellow","hex":"#fdd835","example_gr":"Ήλιος","example_en":"Sun","emoji":"☀️"},
-    {"gr":"Πράσινο","en":"Green","hex":"#43a047","example_gr":"Φύλλο","example_en":"Leaf","emoji":"🍃"},
-    {"gr":"Πορτοκαλί","en":"Orange","hex":"#fb8c00","example_gr":"Πορτοκάλι","example_en":"Orange","emoji":"🍊"},
-    {"gr":"Μωβ","en":"Purple","hex":"#8e24aa","example_gr":"Σταφύλι","example_en":"Grape","emoji":"🍇"},
-    {"gr":"Ροζ","en":"Pink","hex":"#ec407a","example_gr":"Λουλούδι","example_en":"Flower","emoji":"🌸"},
-    {"gr":"Καφέ","en":"Brown","hex":"#6d4c41","example_gr":"Αρκούδα","example_en":"Bear","emoji":"🐻"},
-    {"gr":"Μαύρο","en":"Black","hex":"#212121","example_gr":"Πάνθηρας","example_en":"Panther","emoji":"🐈‍⬛"},
-    {"gr":"Λευκό","en":"White","hex":"#f5f5f5","example_gr":"Σύννεφο","example_en":"Cloud","emoji":"☁️"},
-    {"gr":"Γκρι","en":"Gray","hex":"#757575","example_gr":"Ελέφαντας","example_en":"Elephant","emoji":"🐘"}
+var shapes := [
+    {"gr":"Κύκλος","en":"Circle","symbol":"●","example_gr":"Μπάλα","example_en":"Ball"},
+    {"gr":"Τετράγωνο","en":"Square","symbol":"■","example_gr":"Παράθυρο","example_en":"Window"},
+    {"gr":"Τρίγωνο","en":"Triangle","symbol":"▲","example_gr":"Στέγη","example_en":"Roof"},
+    {"gr":"Ορθογώνιο","en":"Rectangle","symbol":"▭","example_gr":"Πόρτα","example_en":"Door"},
+    {"gr":"Αστέρι","en":"Star","symbol":"★","example_gr":"Αστέρι","example_en":"Star"},
+    {"gr":"Καρδιά","en":"Heart","symbol":"♥","example_gr":"Καρδιά","example_en":"Heart"},
+    {"gr":"Οβάλ","en":"Oval","symbol":"⬭","example_gr":"Αυγό","example_en":"Egg"},
+    {"gr":"Ρόμβος","en":"Diamond","symbol":"◆","example_gr":"Χαρταετός","example_en":"Kite"}
 ]
 
 var index := 0
 var language := "el"
 
-var color_panel: ColorRect
+var symbol_label: Label
 var name_label: Label
 var example_label: Label
-var emoji_label: Label
 var grid: GridContainer
 
 func _ready() -> void:
     _build()
     _rebuild_grid()
-    _show_color()
+    _show_shape()
 
 func _build() -> void:
     var background := ColorRect.new()
-    background.color = Color("#f4fbff")
+    background.color = Color("#f5f0ff")
     background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
     add_child(background)
 
@@ -44,13 +40,13 @@ func _build() -> void:
     top.add_child(top_row)
 
     var back := Button.new()
-    back.text = "← Αριθμοί"
+    back.text = "← Χρώματα"
     back.custom_minimum_size = Vector2(170, 50)
-    back.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers.tscn"))
+    back.pressed.connect(func(): get_tree().change_scene_to_file("res://colors.tscn"))
     top_row.add_child(back)
 
     var title := Label.new()
-    title.text = "Ο Κόσμος των Χρωμάτων"
+    title.text = "Ο Κόσμος των Σχημάτων"
     title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
     title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     title.add_theme_font_size_override("font_size", 30)
@@ -98,14 +94,13 @@ func _build() -> void:
     column.add_theme_constant_override("separation", 16)
     right.add_child(column)
 
-    color_panel = ColorRect.new()
-    color_panel.custom_minimum_size = Vector2(0, 250)
-    column.add_child(color_panel)
-
-    emoji_label = Label.new()
-    emoji_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-    emoji_label.add_theme_font_size_override("font_size", 90)
-    column.add_child(emoji_label)
+    symbol_label = Label.new()
+    symbol_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    symbol_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+    symbol_label.custom_minimum_size = Vector2(0, 280)
+    symbol_label.add_theme_font_size_override("font_size", 210)
+    symbol_label.add_theme_color_override("font_color", Color("#6c5ce7"))
+    column.add_child(symbol_label)
 
     name_label = Label.new()
     name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -118,20 +113,19 @@ func _build() -> void:
     column.add_child(example_label)
 
     var hear := Button.new()
-    hear.text = "🔊 Άκουσε το χρώμα"
+    hear.text = "🔊 Άκουσε το σχήμα"
     hear.custom_minimum_size = Vector2(280, 58)
     hear.pressed.connect(_speak_current)
     column.add_child(hear)
 
     var quiz := Button.new()
-    quiz.text = "❓ Κουίζ χρωμάτων"
+    quiz.text = "❓ Κουίζ σχημάτων"
     quiz.custom_minimum_size = Vector2(280, 58)
-    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://colors_quiz.tscn"))
+    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://shapes_quiz.tscn"))
     column.add_child(quiz)
 
     var nav := HBoxContainer.new()
     nav.alignment = BoxContainer.ALIGNMENT_CENTER
-    nav.add_theme_constant_override("separation", 14)
     column.add_child(nav)
 
     var previous := Button.new()
@@ -146,37 +140,21 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
-    var shapes_button := Button.new()
-    shapes_button.text = "🔷 Σχήματα"
-    shapes_button.custom_minimum_size = Vector2(280, 58)
-    shapes_button.pressed.connect(func(): get_tree().change_scene_to_file("res://shapes.tscn"))
-    column.add_child(shapes_button)
-
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
 
-    for i in range(colors.size()):
+    for i in range(shapes.size()):
         var button := Button.new()
-        button.text = colors[i]["gr"] if language == "el" else colors[i]["en"]
-        button.custom_minimum_size = Vector2(145, 64)
+        button.text = shapes[i]["symbol"] + "\n" + (shapes[i]["gr"] if language == "el" else shapes[i]["en"])
+        button.custom_minimum_size = Vector2(145, 90)
         button.add_theme_font_size_override("font_size", 20)
-
-        var style := StyleBoxFlat.new()
-        style.bg_color = Color(colors[i]["hex"])
-        style.corner_radius_top_left = 14
-        style.corner_radius_top_right = 14
-        style.corner_radius_bottom_left = 14
-        style.corner_radius_bottom_right = 14
-        button.add_theme_stylebox_override("normal", style)
-
-        button.pressed.connect(func(chosen=i): index = chosen; _show_color())
+        button.pressed.connect(func(chosen=i): index = chosen; _show_shape())
         grid.add_child(button)
 
-func _show_color() -> void:
-    var item = colors[index]
-    color_panel.color = Color(item["hex"])
-    emoji_label.text = item["emoji"]
+func _show_shape() -> void:
+    var item = shapes[index]
+    symbol_label.text = item["symbol"]
 
     if language == "el":
         name_label.text = item["gr"]
@@ -188,21 +166,21 @@ func _show_color() -> void:
 func _set_language(value: String) -> void:
     language = value
     _rebuild_grid()
-    _show_color()
+    _show_shape()
 
 func _previous() -> void:
-    index = (index - 1 + colors.size()) % colors.size()
-    _show_color()
+    index = (index - 1 + shapes.size()) % shapes.size()
+    _show_shape()
 
 func _next() -> void:
-    index = (index + 1) % colors.size()
-    _show_color()
+    index = (index + 1) % shapes.size()
+    _show_shape()
 
 func _speak_current() -> void:
     if not DisplayServer.has_feature(DisplayServer.FEATURE_TEXT_TO_SPEECH):
         return
 
-    var item = colors[index]
+    var item = shapes[index]
     var text := item["gr"] + ". " + item["example_gr"] if language == "el" else item["en"] + ". " + item["example_en"]
     var voices := DisplayServer.tts_get_voices_for_language(language)
 
