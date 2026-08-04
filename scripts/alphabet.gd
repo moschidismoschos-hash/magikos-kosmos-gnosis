@@ -163,6 +163,12 @@ func _build() -> void:
     song.pressed.connect(func(): get_tree().change_scene_to_file("res://alphabet_song.tscn"))
     center.add_child(song)
 
+    var numbers := Button.new()
+    numbers.text = "🔢 Αριθμοί 0–100"
+    numbers.custom_minimum_size = Vector2(250, 58)
+    numbers.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers.tscn"))
+    center.add_child(numbers)
+
 func _set_language(value: String) -> void:
     language = value
     current = greek if value == "el" else english
