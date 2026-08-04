@@ -120,6 +120,12 @@ func _build() -> void:
     counting.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_counting.tscn"))
     column.add_child(counting)
 
+    var writing := Button.new()
+    writing.text = "✍ Γράψε τους αριθμούς"
+    writing.custom_minimum_size = Vector2(280, 58)
+    writing.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_writing.tscn"))
+    column.add_child(writing)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
