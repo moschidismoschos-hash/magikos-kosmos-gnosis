@@ -190,6 +190,12 @@ func _build() -> void:
     sounds.pressed.connect(func(): get_tree().change_scene_to_file("res://zoo_sounds.tscn"))
     actions.add_child(sounds)
 
+    var writing := Button.new()
+    writing.text = "✍ Γραφή"
+    writing.custom_minimum_size = Vector2(160, 58)
+    writing.pressed.connect(func(): get_tree().change_scene_to_file("res://zoo_writing.tscn"))
+    actions.add_child(writing)
+
 func _show_animal(index: int) -> void:
     selected_index = index
     var animal = animals[index]
