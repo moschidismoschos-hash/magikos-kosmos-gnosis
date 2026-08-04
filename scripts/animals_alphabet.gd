@@ -153,6 +153,12 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
+    var fruits_button := Button.new()
+    fruits_button.text = "🍎 Φρούτα"
+    fruits_button.custom_minimum_size = Vector2(280, 58)
+    fruits_button.pressed.connect(func(): get_tree().change_scene_to_file("res://fruits.tscn"))
+    column.add_child(fruits_button)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
