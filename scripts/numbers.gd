@@ -144,6 +144,12 @@ func _build() -> void:
     order_game.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_order.tscn"))
     column.add_child(order_game)
 
+    var compare := Button.new()
+    compare.text = "⚖ Μεγαλύτερος ή μικρότερος"
+    compare.custom_minimum_size = Vector2(280, 58)
+    compare.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_compare.tscn"))
+    column.add_child(compare)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
