@@ -152,6 +152,12 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
+    var clothes_button := Button.new()
+    clothes_button.text = "👕 Ρούχα"
+    clothes_button.custom_minimum_size = Vector2(280, 58)
+    clothes_button.pressed.connect(func(): get_tree().change_scene_to_file("res://clothes.tscn"))
+    column.add_child(clothes_button)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
