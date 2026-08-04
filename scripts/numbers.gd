@@ -162,6 +162,12 @@ func _build() -> void:
     song.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_song.tscn"))
     column.add_child(song)
 
+    var colors_button := Button.new()
+    colors_button.text = "🎨 Χρώματα"
+    colors_button.custom_minimum_size = Vector2(280, 58)
+    colors_button.pressed.connect(func(): get_tree().change_scene_to_file("res://colors.tscn"))
+    column.add_child(colors_button)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
