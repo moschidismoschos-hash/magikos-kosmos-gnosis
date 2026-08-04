@@ -177,6 +177,12 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
+    var seasons_button := Button.new()
+    seasons_button.text = "🌸 Οι Τέσσερις Εποχές"
+    seasons_button.custom_minimum_size = Vector2(280, 58)
+    seasons_button.pressed.connect(func(): get_tree().change_scene_to_file("res://seasons.tscn"))
+    column.add_child(seasons_button)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
