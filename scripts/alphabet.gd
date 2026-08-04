@@ -107,6 +107,12 @@ func _build() -> void:
     hear.pressed.connect(_speak_current)
     center.add_child(hear)
 
+    var writing := Button.new()
+    writing.text = "✍ Γράψε το γράμμα"
+    writing.custom_minimum_size = Vector2(250, 58)
+    writing.pressed.connect(func(): get_tree().change_scene_to_file("res://alphabet_writing.tscn"))
+    center.add_child(writing)
+
     var nav := HBoxContainer.new()
     nav.alignment = BoxContainer.ALIGNMENT_CENTER
     center.add_child(nav)
