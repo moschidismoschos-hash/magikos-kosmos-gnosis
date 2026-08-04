@@ -157,6 +157,12 @@ func _build() -> void:
     order_game.pressed.connect(func(): get_tree().change_scene_to_file("res://alphabet_order.tscn"))
     center.add_child(order_game)
 
+    var song := Button.new()
+    song.text = "🎵 Τραγουδάκι Αλφαβήτας"
+    song.custom_minimum_size = Vector2(250, 58)
+    song.pressed.connect(func(): get_tree().change_scene_to_file("res://alphabet_song.tscn"))
+    center.add_child(song)
+
 func _set_language(value: String) -> void:
     language = value
     current = greek if value == "el" else english
