@@ -236,6 +236,10 @@ func _show_map() -> void:
     map_layer.visible = true
 
 func _open_place(action: String) -> void:
+    if action == "zoo":
+        get_tree().change_scene_to_file("res://zoo.tscn")
+        return
+
     var data := {
         "art": ["Εργαστήριο Ζωγραφικής", "Εδώ θα μπουν έτοιμα σχέδια για χρωμάτισμα, πινέλα και αποθήκευση ζωγραφιών."],
         "school": ["Σχολείο Γραμμάτων", "Ελληνικά και αγγλικά γράμματα, καθοδήγηση γραφής και παιχνίδια λέξεων."],
