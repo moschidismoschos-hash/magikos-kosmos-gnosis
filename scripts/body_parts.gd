@@ -1,32 +1,33 @@
 extends Control
 
-var shapes := [
-    {"gr":"Κύκλος","en":"Circle","symbol":"●","example_gr":"Μπάλα","example_en":"Ball"},
-    {"gr":"Τετράγωνο","en":"Square","symbol":"■","example_gr":"Παράθυρο","example_en":"Window"},
-    {"gr":"Τρίγωνο","en":"Triangle","symbol":"▲","example_gr":"Στέγη","example_en":"Roof"},
-    {"gr":"Ορθογώνιο","en":"Rectangle","symbol":"▭","example_gr":"Πόρτα","example_en":"Door"},
-    {"gr":"Αστέρι","en":"Star","symbol":"★","example_gr":"Αστέρι","example_en":"Star"},
-    {"gr":"Καρδιά","en":"Heart","symbol":"♥","example_gr":"Καρδιά","example_en":"Heart"},
-    {"gr":"Οβάλ","en":"Oval","symbol":"⬭","example_gr":"Αυγό","example_en":"Egg"},
-    {"gr":"Ρόμβος","en":"Diamond","symbol":"◆","example_gr":"Χαρταετός","example_en":"Kite"}
+var parts := [
+    {"gr":"Κεφάλι","en":"Head","symbol":"🙂","fact_gr":"Στο κεφάλι βρίσκονται τα μάτια, τα αυτιά, η μύτη και το στόμα.","fact_en":"The eyes, ears, nose and mouth are on the head."},
+    {"gr":"Μάτια","en":"Eyes","symbol":"👀","fact_gr":"Με τα μάτια βλέπουμε.","fact_en":"We see with our eyes."},
+    {"gr":"Αυτιά","en":"Ears","symbol":"👂","fact_gr":"Με τα αυτιά ακούμε.","fact_en":"We hear with our ears."},
+    {"gr":"Μύτη","en":"Nose","symbol":"👃","fact_gr":"Με τη μύτη μυρίζουμε.","fact_en":"We smell with our nose."},
+    {"gr":"Στόμα","en":"Mouth","symbol":"👄","fact_gr":"Με το στόμα μιλάμε και τρώμε.","fact_en":"We speak and eat with our mouth."},
+    {"gr":"Χέρι","en":"Hand","symbol":"✋","fact_gr":"Με τα χέρια πιάνουμε αντικείμενα.","fact_en":"We hold things with our hands."},
+    {"gr":"Δάχτυλα","en":"Fingers","symbol":"🖐️","fact_gr":"Τα δάχτυλα μας βοηθούν να γράφουμε και να ζωγραφίζουμε.","fact_en":"Fingers help us write and draw."},
+    {"gr":"Πόδι","en":"Leg","symbol":"🦵","fact_gr":"Με τα πόδια περπατάμε και τρέχουμε.","fact_en":"We walk and run with our legs."},
+    {"gr":"Πατούσα","en":"Foot","symbol":"🦶","fact_gr":"Η πατούσα μας βοηθά να στεκόμαστε.","fact_en":"Our feet help us stand."},
+    {"gr":"Καρδιά","en":"Heart","symbol":"❤️","fact_gr":"Η καρδιά χτυπά και στέλνει αίμα σε όλο το σώμα.","fact_en":"The heart pumps blood around the body."}
 ]
 
 var index := 0
 var language := "el"
-
 var symbol_label: Label
 var name_label: Label
-var example_label: Label
+var fact_label: Label
 var grid: GridContainer
 
 func _ready() -> void:
     _build()
     _rebuild_grid()
-    _show_shape()
+    _show_part()
 
 func _build() -> void:
     var background := ColorRect.new()
-    background.color = Color("#f5f0ff")
+    background.color = Color("#fff4f7")
     background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
     add_child(background)
 
@@ -40,13 +41,13 @@ func _build() -> void:
     top.add_child(top_row)
 
     var back := Button.new()
-    back.text = "← Χρώματα"
+    back.text = "← Σχήματα"
     back.custom_minimum_size = Vector2(170, 50)
-    back.pressed.connect(func(): get_tree().change_scene_to_file("res://colors.tscn"))
+    back.pressed.connect(func(): get_tree().change_scene_to_file("res://shapes.tscn"))
     top_row.add_child(back)
 
     var title := Label.new()
-    title.text = "Ο Κόσμος των Σχημάτων"
+    title.text = "Το Σώμα μου"
     title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
     title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     title.add_theme_font_size_override("font_size", 30)
@@ -71,7 +72,7 @@ func _build() -> void:
     add_child(body)
 
     var left := PanelContainer.new()
-    left.custom_minimum_size = Vector2(330, 0)
+    left.custom_minimum_size = Vector2(340, 0)
     left.add_theme_stylebox_override("panel", _panel_style(Color(1,1,1,0.97), 24))
     body.add_child(left)
 
@@ -97,9 +98,8 @@ func _build() -> void:
     symbol_label = Label.new()
     symbol_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     symbol_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-    symbol_label.custom_minimum_size = Vector2(0, 280)
-    symbol_label.add_theme_font_size_override("font_size", 210)
-    symbol_label.add_theme_color_override("font_color", Color("#6c5ce7"))
+    symbol_label.custom_minimum_size = Vector2(0, 250)
+    symbol_label.add_theme_font_size_override("font_size", 170)
     column.add_child(symbol_label)
 
     name_label = Label.new()
@@ -107,21 +107,23 @@ func _build() -> void:
     name_label.add_theme_font_size_override("font_size", 42)
     column.add_child(name_label)
 
-    example_label = Label.new()
-    example_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-    example_label.add_theme_font_size_override("font_size", 28)
-    column.add_child(example_label)
+    fact_label = Label.new()
+    fact_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    fact_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+    fact_label.custom_minimum_size = Vector2(0, 100)
+    fact_label.add_theme_font_size_override("font_size", 25)
+    column.add_child(fact_label)
 
     var hear := Button.new()
-    hear.text = "🔊 Άκουσε το σχήμα"
+    hear.text = "🔊 Άκουσε"
     hear.custom_minimum_size = Vector2(280, 58)
     hear.pressed.connect(_speak_current)
     column.add_child(hear)
 
     var quiz := Button.new()
-    quiz.text = "❓ Κουίζ σχημάτων"
+    quiz.text = "❓ Κουίζ σώματος"
     quiz.custom_minimum_size = Vector2(280, 58)
-    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://shapes_quiz.tscn"))
+    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://body_parts_quiz.tscn"))
     column.add_child(quiz)
 
     var nav := HBoxContainer.new()
@@ -140,54 +142,49 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
-    var body_button := Button.new()
-    body_button.text = "🧍 Το Σώμα μου"
-    body_button.custom_minimum_size = Vector2(280, 58)
-    body_button.pressed.connect(func(): get_tree().change_scene_to_file("res://body_parts.tscn"))
-    column.add_child(body_button)
-
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
 
-    for i in range(shapes.size()):
+    for i in range(parts.size()):
         var button := Button.new()
-        button.text = shapes[i]["symbol"] + "\n" + (shapes[i]["gr"] if language == "el" else shapes[i]["en"])
-        button.custom_minimum_size = Vector2(145, 90)
+        var text := parts[i]["gr"] if language == "el" else parts[i]["en"]
+        button.text = parts[i]["symbol"] + "\n" + text
+        button.custom_minimum_size = Vector2(150, 90)
         button.add_theme_font_size_override("font_size", 20)
-        button.pressed.connect(func(chosen=i): index = chosen; _show_shape())
+        button.pressed.connect(func(chosen=i): index = chosen; _show_part())
         grid.add_child(button)
 
-func _show_shape() -> void:
-    var item = shapes[index]
+func _show_part() -> void:
+    var item = parts[index]
     symbol_label.text = item["symbol"]
 
     if language == "el":
         name_label.text = item["gr"]
-        example_label.text = "Παράδειγμα: " + item["example_gr"]
+        fact_label.text = item["fact_gr"]
     else:
         name_label.text = item["en"]
-        example_label.text = "Example: " + item["example_en"]
+        fact_label.text = item["fact_en"]
 
 func _set_language(value: String) -> void:
     language = value
     _rebuild_grid()
-    _show_shape()
+    _show_part()
 
 func _previous() -> void:
-    index = (index - 1 + shapes.size()) % shapes.size()
-    _show_shape()
+    index = (index - 1 + parts.size()) % parts.size()
+    _show_part()
 
 func _next() -> void:
-    index = (index + 1) % shapes.size()
-    _show_shape()
+    index = (index + 1) % parts.size()
+    _show_part()
 
 func _speak_current() -> void:
     if not DisplayServer.has_feature(DisplayServer.FEATURE_TEXT_TO_SPEECH):
         return
 
-    var item = shapes[index]
-    var text := item["gr"] + ". " + item["example_gr"] if language == "el" else item["en"] + ". " + item["example_en"]
+    var item = parts[index]
+    var text := item["gr"] + ". " + item["fact_gr"] if language == "el" else item["en"] + ". " + item["fact_en"]
     var voices := DisplayServer.tts_get_voices_for_language(language)
 
     if voices.size() > 0:
