@@ -217,6 +217,12 @@ func _change_section(value: String) -> void:
     _rebuild_grid()
     _show_item()
 
+    var dinosaurs_button := Button.new()
+    dinosaurs_button.text = "🦖 Δεινόσαυροι"
+    dinosaurs_button.custom_minimum_size = Vector2(290, 58)
+    dinosaurs_button.pressed.connect(func(): get_tree().change_scene_to_file("res://dinosaurs.tscn"))
+    column.add_child(dinosaurs_button)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
