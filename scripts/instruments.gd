@@ -1,16 +1,16 @@
 extends Control
 
-var parts := [
-    {"gr":"Κεφάλι","en":"Head","symbol":"🙂","fact_gr":"Στο κεφάλι βρίσκονται τα μάτια, τα αυτιά, η μύτη και το στόμα.","fact_en":"The eyes, ears, nose and mouth are on the head."},
-    {"gr":"Μάτια","en":"Eyes","symbol":"👀","fact_gr":"Με τα μάτια βλέπουμε.","fact_en":"We see with our eyes."},
-    {"gr":"Αυτιά","en":"Ears","symbol":"👂","fact_gr":"Με τα αυτιά ακούμε.","fact_en":"We hear with our ears."},
-    {"gr":"Μύτη","en":"Nose","symbol":"👃","fact_gr":"Με τη μύτη μυρίζουμε.","fact_en":"We smell with our nose."},
-    {"gr":"Στόμα","en":"Mouth","symbol":"👄","fact_gr":"Με το στόμα μιλάμε και τρώμε.","fact_en":"We speak and eat with our mouth."},
-    {"gr":"Χέρι","en":"Hand","symbol":"✋","fact_gr":"Με τα χέρια πιάνουμε αντικείμενα.","fact_en":"We hold things with our hands."},
-    {"gr":"Δάχτυλα","en":"Fingers","symbol":"🖐️","fact_gr":"Τα δάχτυλα μας βοηθούν να γράφουμε και να ζωγραφίζουμε.","fact_en":"Fingers help us write and draw."},
-    {"gr":"Πόδι","en":"Leg","symbol":"🦵","fact_gr":"Με τα πόδια περπατάμε και τρέχουμε.","fact_en":"We walk and run with our legs."},
-    {"gr":"Πατούσα","en":"Foot","symbol":"🦶","fact_gr":"Η πατούσα μας βοηθά να στεκόμαστε.","fact_en":"Our feet help us stand."},
-    {"gr":"Καρδιά","en":"Heart","symbol":"❤️","fact_gr":"Η καρδιά χτυπά και στέλνει αίμα σε όλο το σώμα.","fact_en":"The heart pumps blood around the body."}
+var instruments := [
+    {"gr":"Πιάνο","en":"Piano","symbol":"🎹","fact_gr":"Το πιάνο έχει πλήκτρα και μπορεί να παίζει πολλές νότες.","fact_en":"The piano has keys and can play many notes."},
+    {"gr":"Κιθάρα","en":"Guitar","symbol":"🎸","fact_gr":"Η κιθάρα έχει χορδές που τις χτυπάμε ή τις τραβάμε.","fact_en":"The guitar has strings that we strum or pluck."},
+    {"gr":"Βιολί","en":"Violin","symbol":"🎻","fact_gr":"Το βιολί παίζεται με δοξάρι.","fact_en":"The violin is played with a bow."},
+    {"gr":"Τύμπανο","en":"Drum","symbol":"🥁","fact_gr":"Το τύμπανο κρατά τον ρυθμό.","fact_en":"The drum keeps the rhythm."},
+    {"gr":"Τρομπέτα","en":"Trumpet","symbol":"🎺","fact_gr":"Η τρομπέτα είναι πνευστό όργανο.","fact_en":"The trumpet is a wind instrument."},
+    {"gr":"Σαξόφωνο","en":"Saxophone","symbol":"🎷","fact_gr":"Το σαξόφωνο έχει δυνατό και ζεστό ήχο.","fact_en":"The saxophone has a strong and warm sound."},
+    {"gr":"Φλάουτο","en":"Flute","symbol":"🪈","fact_gr":"Το φλάουτο παράγει ήχο όταν φυσάμε μέσα του.","fact_en":"The flute makes sound when we blow into it."},
+    {"gr":"Ακορντεόν","en":"Accordion","symbol":"🪗","fact_gr":"Το ακορντεόν ανοίγει και κλείνει σαν φυσαρμόνικα με πλήκτρα.","fact_en":"The accordion opens and closes while we press keys."},
+    {"gr":"Μαράκες","en":"Maracas","symbol":"🪇","fact_gr":"Οι μαράκες παράγουν ρυθμό όταν τις κουνάμε.","fact_en":"Maracas make rhythm when we shake them."},
+    {"gr":"Μικρόφωνο","en":"Microphone","symbol":"🎤","fact_gr":"Με το μικρόφωνο δυναμώνουμε τη φωνή μας.","fact_en":"A microphone makes our voice louder."}
 ]
 
 var index := 0
@@ -23,11 +23,11 @@ var grid: GridContainer
 func _ready() -> void:
     _build()
     _rebuild_grid()
-    _show_part()
+    _show_instrument()
 
 func _build() -> void:
     var background := ColorRect.new()
-    background.color = Color("#fff4f7")
+    background.color = Color("#f4f0ff")
     background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
     add_child(background)
 
@@ -41,13 +41,13 @@ func _build() -> void:
     top.add_child(top_row)
 
     var back := Button.new()
-    back.text = "← Σχήματα"
-    back.custom_minimum_size = Vector2(170, 50)
-    back.pressed.connect(func(): get_tree().change_scene_to_file("res://shapes.tscn"))
+    back.text = "← Το Σώμα μου"
+    back.custom_minimum_size = Vector2(190, 50)
+    back.pressed.connect(func(): get_tree().change_scene_to_file("res://body_parts.tscn"))
     top_row.add_child(back)
 
     var title := Label.new()
-    title.text = "Το Σώμα μου"
+    title.text = "Μουσικά Όργανα"
     title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
     title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     title.add_theme_font_size_override("font_size", 30)
@@ -121,9 +121,9 @@ func _build() -> void:
     column.add_child(hear)
 
     var quiz := Button.new()
-    quiz.text = "❓ Κουίζ σώματος"
+    quiz.text = "❓ Κουίζ οργάνων"
     quiz.custom_minimum_size = Vector2(280, 58)
-    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://body_parts_quiz.tscn"))
+    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://instruments_quiz.tscn"))
     column.add_child(quiz)
 
     var nav := HBoxContainer.new()
@@ -142,27 +142,21 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
-    var instruments_button := Button.new()
-    instruments_button.text = "🎵 Μουσικά Όργανα"
-    instruments_button.custom_minimum_size = Vector2(280, 58)
-    instruments_button.pressed.connect(func(): get_tree().change_scene_to_file("res://instruments.tscn"))
-    column.add_child(instruments_button)
-
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
 
-    for i in range(parts.size()):
+    for i in range(instruments.size()):
         var button := Button.new()
-        var text := parts[i]["gr"] if language == "el" else parts[i]["en"]
-        button.text = parts[i]["symbol"] + "\n" + text
+        var text := instruments[i]["gr"] if language == "el" else instruments[i]["en"]
+        button.text = instruments[i]["symbol"] + "\n" + text
         button.custom_minimum_size = Vector2(150, 90)
         button.add_theme_font_size_override("font_size", 20)
-        button.pressed.connect(func(chosen=i): index = chosen; _show_part())
+        button.pressed.connect(func(chosen=i): index = chosen; _show_instrument())
         grid.add_child(button)
 
-func _show_part() -> void:
-    var item = parts[index]
+func _show_instrument() -> void:
+    var item = instruments[index]
     symbol_label.text = item["symbol"]
 
     if language == "el":
@@ -175,21 +169,21 @@ func _show_part() -> void:
 func _set_language(value: String) -> void:
     language = value
     _rebuild_grid()
-    _show_part()
+    _show_instrument()
 
 func _previous() -> void:
-    index = (index - 1 + parts.size()) % parts.size()
-    _show_part()
+    index = (index - 1 + instruments.size()) % instruments.size()
+    _show_instrument()
 
 func _next() -> void:
-    index = (index + 1) % parts.size()
-    _show_part()
+    index = (index + 1) % instruments.size()
+    _show_instrument()
 
 func _speak_current() -> void:
     if not DisplayServer.has_feature(DisplayServer.FEATURE_TEXT_TO_SPEECH):
         return
 
-    var item = parts[index]
+    var item = instruments[index]
     var text := item["gr"] + ". " + item["fact_gr"] if language == "el" else item["en"] + ". " + item["fact_en"]
     var voices := DisplayServer.tts_get_voices_for_language(language)
 
