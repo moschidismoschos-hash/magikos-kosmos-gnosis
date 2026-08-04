@@ -1,26 +1,26 @@
 extends Control
 
-var vegetables := [
-    {"gr":"Καρότο","en":"Carrot","symbol":"🥕","fact_gr":"Το καρότο μεγαλώνει μέσα στο χώμα.","fact_en":"A carrot grows under the soil."},
-    {"gr":"Ντομάτα","en":"Tomato","symbol":"🍅","fact_gr":"Η ντομάτα έχει πολλούς μικρούς σπόρους.","fact_en":"A tomato contains many tiny seeds."},
-    {"gr":"Πατάτα","en":"Potato","symbol":"🥔","fact_gr":"Η πατάτα μεγαλώνει κάτω από το έδαφος.","fact_en":"A potato grows underground."},
-    {"gr":"Κρεμμύδι","en":"Onion","symbol":"🧅","fact_gr":"Το κρεμμύδι έχει πολλές στρώσεις.","fact_en":"An onion has many layers."},
-    {"gr":"Σκόρδο","en":"Garlic","symbol":"🧄","fact_gr":"Το σκόρδο αποτελείται από πολλές σκελίδες.","fact_en":"Garlic is made of several cloves."},
-    {"gr":"Αγγούρι","en":"Cucumber","symbol":"🥒","fact_gr":"Το αγγούρι έχει πολύ νερό και είναι δροσερό.","fact_en":"A cucumber contains lots of water and is refreshing."},
-    {"gr":"Πιπεριά","en":"Pepper","symbol":"🫑","fact_gr":"Η πιπεριά μπορεί να είναι πράσινη, κόκκινη ή κίτρινη.","fact_en":"A pepper can be green, red or yellow."},
-    {"gr":"Μελιτζάνα","en":"Eggplant","symbol":"🍆","fact_gr":"Η μελιτζάνα έχει συνήθως μωβ χρώμα.","fact_en":"An eggplant is usually purple."},
-    {"gr":"Μπρόκολο","en":"Broccoli","symbol":"🥦","fact_gr":"Το μπρόκολο μοιάζει με μικρό πράσινο δέντρο.","fact_en":"Broccoli looks like a small green tree."},
-    {"gr":"Κουνουπίδι","en":"Cauliflower","symbol":"🥦","fact_gr":"Το κουνουπίδι έχει λευκά ανθάκια.","fact_en":"Cauliflower has white florets."},
-    {"gr":"Μαρούλι","en":"Lettuce","symbol":"🥬","fact_gr":"Το μαρούλι έχει πολλά πράσινα φύλλα.","fact_en":"Lettuce has many green leaves."},
-    {"gr":"Λάχανο","en":"Cabbage","symbol":"🥬","fact_gr":"Το λάχανο έχει φύλλα που σχηματίζουν μια σφιχτή μπάλα.","fact_en":"Cabbage leaves form a tight round head."},
-    {"gr":"Καλαμπόκι","en":"Corn","symbol":"🌽","fact_gr":"Το καλαμπόκι έχει πολλούς κίτρινους σπόρους.","fact_en":"Corn has many yellow kernels."},
-    {"gr":"Μπιζέλι","en":"Pea","symbol":"🟢","fact_gr":"Τα μπιζέλια μεγαλώνουν μέσα σε λοβούς.","fact_en":"Peas grow inside pods."},
-    {"gr":"Φασολάκι","en":"Green bean","symbol":"🫛","fact_gr":"Τα φασολάκια μεγαλώνουν σε μακριούς πράσινους λοβούς.","fact_en":"Green beans grow in long green pods."},
-    {"gr":"Κολοκύθα","en":"Pumpkin","symbol":"🎃","fact_gr":"Η κολοκύθα μπορεί να μεγαλώσει πολύ.","fact_en":"A pumpkin can grow very large."},
-    {"gr":"Κολοκυθάκι","en":"Zucchini","symbol":"🥒","fact_gr":"Το κολοκυθάκι έχει μαλακή πράσινη φλούδα.","fact_en":"A zucchini has soft green skin."},
-    {"gr":"Παντζάρι","en":"Beetroot","symbol":"🔴","fact_gr":"Το παντζάρι έχει βαθύ κόκκινο χρώμα.","fact_en":"Beetroot has a deep red color."},
-    {"gr":"Ραπανάκι","en":"Radish","symbol":"🔴","fact_gr":"Το ραπανάκι είναι μικρό και τραγανό.","fact_en":"A radish is small and crunchy."},
-    {"gr":"Σπανάκι","en":"Spinach","symbol":"🥬","fact_gr":"Το σπανάκι έχει σκούρα πράσινα φύλλα.","fact_en":"Spinach has dark green leaves."}
+var foods := [
+    {"gr":"Ψωμί","en":"Bread","symbol":"🍞","fact_gr":"Το ψωμί φτιάχνεται συνήθως από αλεύρι, νερό και μαγιά.","fact_en":"Bread is usually made from flour, water and yeast."},
+    {"gr":"Γάλα","en":"Milk","symbol":"🥛","fact_gr":"Το γάλα χρησιμοποιείται και για την παρασκευή γιαουρτιού και τυριού.","fact_en":"Milk is also used to make yogurt and cheese."},
+    {"gr":"Τυρί","en":"Cheese","symbol":"🧀","fact_gr":"Το τυρί φτιάχνεται από γάλα.","fact_en":"Cheese is made from milk."},
+    {"gr":"Γιαούρτι","en":"Yogurt","symbol":"🥣","fact_gr":"Το γιαούρτι είναι μαλακό γαλακτοκομικό τρόφιμο.","fact_en":"Yogurt is a soft dairy food."},
+    {"gr":"Αυγό","en":"Egg","symbol":"🥚","fact_gr":"Το αυγό έχει κέλυφος, ασπράδι και κρόκο.","fact_en":"An egg has a shell, white and yolk."},
+    {"gr":"Ρύζι","en":"Rice","symbol":"🍚","fact_gr":"Το ρύζι είναι βασική τροφή σε πολλές χώρες.","fact_en":"Rice is a staple food in many countries."},
+    {"gr":"Μακαρόνια","en":"Pasta","symbol":"🍝","fact_gr":"Τα μακαρόνια φτιάχνονται κυρίως από σιμιγδάλι και νερό.","fact_en":"Pasta is mainly made from semolina and water."},
+    {"gr":"Πατάτες τηγανητές","en":"French fries","symbol":"🍟","fact_gr":"Οι πατάτες τηγανητές γίνονται από κομμένες πατάτες.","fact_en":"French fries are made from sliced potatoes."},
+    {"gr":"Πίτσα","en":"Pizza","symbol":"🍕","fact_gr":"Η πίτσα έχει ζύμη και μπορεί να έχει πολλά διαφορετικά υλικά.","fact_en":"Pizza has dough and can have many different toppings."},
+    {"gr":"Σάντουιτς","en":"Sandwich","symbol":"🥪","fact_gr":"Το σάντουιτς έχει ψωμί και γέμιση.","fact_en":"A sandwich has bread and a filling."},
+    {"gr":"Σούπα","en":"Soup","symbol":"🍲","fact_gr":"Η σούπα τρώγεται ζεστή και μπορεί να έχει λαχανικά.","fact_en":"Soup is eaten warm and can contain vegetables."},
+    {"gr":"Σαλάτα","en":"Salad","symbol":"🥗","fact_gr":"Η σαλάτα μπορεί να έχει πολλά φρέσκα λαχανικά.","fact_en":"A salad can contain many fresh vegetables."},
+    {"gr":"Κοτόπουλο","en":"Chicken","symbol":"🍗","fact_gr":"Το κοτόπουλο μπορεί να μαγειρευτεί με πολλούς τρόπους.","fact_en":"Chicken can be cooked in many ways."},
+    {"gr":"Ψάρι","en":"Fish","symbol":"🐟","fact_gr":"Το ψάρι είναι τροφή που προέρχεται από τη θάλασσα ή τα ποτάμια.","fact_en":"Fish is food that comes from the sea or rivers."},
+    {"gr":"Μέλι","en":"Honey","symbol":"🍯","fact_gr":"Το μέλι το φτιάχνουν οι μέλισσες.","fact_en":"Honey is made by bees."},
+    {"gr":"Μπισκότο","en":"Cookie","symbol":"🍪","fact_gr":"Το μπισκότο είναι μικρό ψημένο γλυκό.","fact_en":"A cookie is a small baked sweet."},
+    {"gr":"Κέικ","en":"Cake","symbol":"🍰","fact_gr":"Το κέικ ψήνεται και μπορεί να έχει πολλά αρώματα.","fact_en":"Cake is baked and can have many flavors."},
+    {"gr":"Παγωτό","en":"Ice cream","symbol":"🍦","fact_gr":"Το παγωτό είναι κρύο και γλυκό επιδόρπιο.","fact_en":"Ice cream is a cold and sweet dessert."},
+    {"gr":"Σοκολάτα","en":"Chocolate","symbol":"🍫","fact_gr":"Η σοκολάτα φτιάχνεται από κακάο.","fact_en":"Chocolate is made from cocoa."},
+    {"gr":"Δημητριακά","en":"Cereal","symbol":"🥣","fact_gr":"Τα δημητριακά τρώγονται συχνά με γάλα.","fact_en":"Cereal is often eaten with milk."}
 ]
 
 var index := 0
@@ -33,11 +33,11 @@ var grid: GridContainer
 func _ready() -> void:
     _build()
     _rebuild_grid()
-    _show_vegetable()
+    _show_food()
 
 func _build() -> void:
     var background := ColorRect.new()
-    background.color = Color("#f1faee")
+    background.color = Color("#fff8ef")
     background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
     add_child(background)
 
@@ -51,13 +51,13 @@ func _build() -> void:
     top.add_child(top_row)
 
     var back := Button.new()
-    back.text = "← Φρούτα"
+    back.text = "← Λαχανικά"
     back.custom_minimum_size = Vector2(170, 50)
-    back.pressed.connect(func(): get_tree().change_scene_to_file("res://fruits.tscn"))
+    back.pressed.connect(func(): get_tree().change_scene_to_file("res://vegetables.tscn"))
     top_row.add_child(back)
 
     var title := Label.new()
-    title.text = "Ο Κόσμος των Λαχανικών"
+    title.text = "Ο Κόσμος των Τροφίμων"
     title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
     title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     title.add_theme_font_size_override("font_size", 30)
@@ -131,9 +131,9 @@ func _build() -> void:
     column.add_child(hear)
 
     var quiz := Button.new()
-    quiz.text = "❓ Κουίζ λαχανικών"
+    quiz.text = "❓ Κουίζ τροφίμων"
     quiz.custom_minimum_size = Vector2(280, 58)
-    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://vegetables_quiz.tscn"))
+    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://foods_quiz.tscn"))
     column.add_child(quiz)
 
     var nav := HBoxContainer.new()
@@ -152,27 +152,21 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
-    var foods_button := Button.new()
-    foods_button.text = "🍞 Τρόφιμα"
-    foods_button.custom_minimum_size = Vector2(280, 58)
-    foods_button.pressed.connect(func(): get_tree().change_scene_to_file("res://foods.tscn"))
-    column.add_child(foods_button)
-
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
 
-    for i in range(vegetables.size()):
+    for i in range(foods.size()):
         var button := Button.new()
-        var text := vegetables[i]["gr"] if language == "el" else vegetables[i]["en"]
-        button.text = vegetables[i]["symbol"] + "\n" + text
+        var text := foods[i]["gr"] if language == "el" else foods[i]["en"]
+        button.text = foods[i]["symbol"] + "\n" + text
         button.custom_minimum_size = Vector2(155, 92)
         button.add_theme_font_size_override("font_size", 20)
-        button.pressed.connect(func(chosen=i): index = chosen; _show_vegetable())
+        button.pressed.connect(func(chosen=i): index = chosen; _show_food())
         grid.add_child(button)
 
-func _show_vegetable() -> void:
-    var item = vegetables[index]
+func _show_food() -> void:
+    var item = foods[index]
     symbol_label.text = item["symbol"]
 
     if language == "el":
@@ -185,21 +179,21 @@ func _show_vegetable() -> void:
 func _set_language(value: String) -> void:
     language = value
     _rebuild_grid()
-    _show_vegetable()
+    _show_food()
 
 func _previous() -> void:
-    index = (index - 1 + vegetables.size()) % vegetables.size()
-    _show_vegetable()
+    index = (index - 1 + foods.size()) % foods.size()
+    _show_food()
 
 func _next() -> void:
-    index = (index + 1) % vegetables.size()
-    _show_vegetable()
+    index = (index + 1) % foods.size()
+    _show_food()
 
 func _speak_current() -> void:
     if not DisplayServer.has_feature(DisplayServer.FEATURE_TEXT_TO_SPEECH):
         return
 
-    var item = vegetables[index]
+    var item = foods[index]
     var text := item["gr"] + ". " + item["fact_gr"] if language == "el" else item["en"] + ". " + item["fact_en"]
     var voices := DisplayServer.tts_get_voices_for_language(language)
 
