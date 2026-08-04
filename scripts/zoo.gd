@@ -166,6 +166,12 @@ func _build() -> void:
     puzzle.pressed.connect(func(): get_tree().change_scene_to_file("res://zoo_puzzle.tscn"))
     actions.add_child(puzzle)
 
+    var coloring := Button.new()
+    coloring.text = "🎨 Χρωμάτισμα"
+    coloring.custom_minimum_size = Vector2(190, 58)
+    coloring.pressed.connect(func(): get_tree().change_scene_to_file("res://zoo_coloring.tscn"))
+    actions.add_child(coloring)
+
 func _show_animal(index: int) -> void:
     selected_index = index
     var animal = animals[index]
