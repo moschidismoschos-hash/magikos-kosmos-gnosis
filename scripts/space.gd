@@ -156,6 +156,12 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
+    var home_button := Button.new()
+    home_button.text = "🏠 Κεντρικό Μενού"
+    home_button.custom_minimum_size = Vector2(290, 56)
+    home_button.pressed.connect(func(): get_tree().change_scene_to_file("res://home_menu.tscn"))
+    column.add_child(home_button)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()

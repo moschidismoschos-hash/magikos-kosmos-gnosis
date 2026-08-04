@@ -1,7 +1,7 @@
 [application]
 
 config/name="Ο Μαγικός Κόσμος της Γνώσης"
-run/main_scene="res://main.tscn"
+run/main_scene="res://home_menu.tscn"
 config/features=PackedStringArray("4.3")
 boot_splash/bg_color=Color(0.086, 0.16, 0.25, 1)
 boot_splash/image="res://assets/map.svg"
