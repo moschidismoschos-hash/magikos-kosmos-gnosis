@@ -150,6 +150,12 @@ func _build() -> void:
     compare.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_compare.tscn"))
     column.add_child(compare)
 
+    var math_game := Button.new()
+    math_game.text = "➕ Προσθέσεις και αφαιρέσεις"
+    math_game.custom_minimum_size = Vector2(280, 58)
+    math_game.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_math.tscn"))
+    column.add_child(math_game)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
