@@ -144,6 +144,12 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
+    var time_button := Button.new()
+    time_button.text = "🕒 Ώρα και Ημερολόγιο"
+    time_button.custom_minimum_size = Vector2(290, 58)
+    time_button.pressed.connect(func(): get_tree().change_scene_to_file("res://time_calendar.tscn"))
+    column.add_child(time_button)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
