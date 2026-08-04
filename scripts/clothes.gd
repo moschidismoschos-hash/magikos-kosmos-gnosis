@@ -157,6 +157,12 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
+    var house_button := Button.new()
+    house_button.text = "🏠 Το Σπίτι"
+    house_button.custom_minimum_size = Vector2(280, 58)
+    house_button.pressed.connect(func(): get_tree().change_scene_to_file("res://house.tscn"))
+    column.add_child(house_button)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
