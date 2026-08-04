@@ -107,6 +107,12 @@ func _build() -> void:
     hear.pressed.connect(_speak_current)
     center.add_child(hear)
 
+    var quiz := Button.new()
+    quiz.text = "❓ Κουίζ γραμμάτων"
+    quiz.custom_minimum_size = Vector2(250, 58)
+    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://alphabet_quiz.tscn"))
+    center.add_child(quiz)
+
     var writing := Button.new()
     writing.text = "✍ Γράψε το γράμμα"
     writing.custom_minimum_size = Vector2(250, 58)
