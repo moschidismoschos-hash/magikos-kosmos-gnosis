@@ -158,6 +158,12 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
+    var weather_button := Button.new()
+    weather_button.text = "🌦️ Καιρικά Φαινόμενα"
+    weather_button.custom_minimum_size = Vector2(290, 58)
+    weather_button.pressed.connect(func(): get_tree().change_scene_to_file("res://weather.tscn"))
+    column.add_child(weather_button)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
