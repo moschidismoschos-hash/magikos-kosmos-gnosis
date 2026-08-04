@@ -160,6 +160,12 @@ func _build() -> void:
     learn.pressed.connect(_reward)
     actions.add_child(learn)
 
+    var puzzle := Button.new()
+    puzzle.text = "🧩 Παζλ"
+    puzzle.custom_minimum_size = Vector2(170, 58)
+    puzzle.pressed.connect(func(): get_tree().change_scene_to_file("res://zoo_puzzle.tscn"))
+    actions.add_child(puzzle)
+
 func _show_animal(index: int) -> void:
     selected_index = index
     var animal = animals[index]
