@@ -107,6 +107,18 @@ func _build() -> void:
     hear.pressed.connect(_speak_current)
     center.add_child(hear)
 
+    var hear_all := Button.new()
+    hear_all.text = "🔊 Άκουσε όλη την αλφαβήτα"
+    hear_all.custom_minimum_size = Vector2(250, 58)
+    hear_all.pressed.connect(_speak_all)
+    center.add_child(hear_all)
+
+    var stop_voice := Button.new()
+    stop_voice.text = "⏹ Σταμάτησε τη φωνή"
+    stop_voice.custom_minimum_size = Vector2(250, 54)
+    stop_voice.pressed.connect(_stop_speaking)
+    center.add_child(stop_voice)
+
     var quiz := Button.new()
     quiz.text = "❓ Κουίζ γραμμάτων"
     quiz.custom_minimum_size = Vector2(250, 58)
@@ -185,3 +197,27 @@ func _speak_current() -> void:
     if voices.size() > 0:
         DisplayServer.tts_stop()
         DisplayServer.tts_speak(item["l"] + ". " + item["w"], voices[0])
+
+func _speak_all() -> void:
+    if not DisplayServer.has_feature(DisplayServer.FEATURE_TEXT_TO_SPEECH):
+        word_label.text = "Η συσκευή δεν υποστηρίζει φωνητική εκφώνηση."
+        return
+
+    var voices := DisplayServer.tts_get_voices_for_language(language)
+
+    if voices.size() == 0:
+        word_label.text = "Δεν βρέθηκε κατάλληλη φωνή στη συσκευή."
+        return
+
+    var parts: Array[String] = []
+
+    for item in current:
+        parts.append(item["l"] + ". " + item["w"] + ".")
+
+    DisplayServer.tts_stop()
+    DisplayServer.tts_speak(" ".join(parts), voices[0], 55, 1.0, 1.0, 1, true)
+
+func _stop_speaking() -> void:
+    if DisplayServer.has_feature(DisplayServer.FEATURE_TEXT_TO_SPEECH):
+        DisplayServer.tts_stop()
+
