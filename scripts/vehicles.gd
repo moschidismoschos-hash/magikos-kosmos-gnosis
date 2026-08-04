@@ -1,16 +1,16 @@
 extends Control
 
-var instruments := [
-    {"gr":"Πιάνο","en":"Piano","symbol":"🎹","fact_gr":"Το πιάνο έχει πλήκτρα και μπορεί να παίζει πολλές νότες.","fact_en":"The piano has keys and can play many notes."},
-    {"gr":"Κιθάρα","en":"Guitar","symbol":"🎸","fact_gr":"Η κιθάρα έχει χορδές που τις χτυπάμε ή τις τραβάμε.","fact_en":"The guitar has strings that we strum or pluck."},
-    {"gr":"Βιολί","en":"Violin","symbol":"🎻","fact_gr":"Το βιολί παίζεται με δοξάρι.","fact_en":"The violin is played with a bow."},
-    {"gr":"Τύμπανο","en":"Drum","symbol":"🥁","fact_gr":"Το τύμπανο κρατά τον ρυθμό.","fact_en":"The drum keeps the rhythm."},
-    {"gr":"Τρομπέτα","en":"Trumpet","symbol":"🎺","fact_gr":"Η τρομπέτα είναι πνευστό όργανο.","fact_en":"The trumpet is a wind instrument."},
-    {"gr":"Σαξόφωνο","en":"Saxophone","symbol":"🎷","fact_gr":"Το σαξόφωνο έχει δυνατό και ζεστό ήχο.","fact_en":"The saxophone has a strong and warm sound."},
-    {"gr":"Φλάουτο","en":"Flute","symbol":"🪈","fact_gr":"Το φλάουτο παράγει ήχο όταν φυσάμε μέσα του.","fact_en":"The flute makes sound when we blow into it."},
-    {"gr":"Ακορντεόν","en":"Accordion","symbol":"🪗","fact_gr":"Το ακορντεόν ανοίγει και κλείνει σαν φυσαρμόνικα με πλήκτρα.","fact_en":"The accordion opens and closes while we press keys."},
-    {"gr":"Μαράκες","en":"Maracas","symbol":"🪇","fact_gr":"Οι μαράκες παράγουν ρυθμό όταν τις κουνάμε.","fact_en":"Maracas make rhythm when we shake them."},
-    {"gr":"Μικρόφωνο","en":"Microphone","symbol":"🎤","fact_gr":"Με το μικρόφωνο δυναμώνουμε τη φωνή μας.","fact_en":"A microphone makes our voice louder."}
+var vehicles := [
+    {"gr":"Αυτοκίνητο","en":"Car","symbol":"🚗","fact_gr":"Το αυτοκίνητο κινείται στον δρόμο.","fact_en":"A car travels on the road."},
+    {"gr":"Λεωφορείο","en":"Bus","symbol":"🚌","fact_gr":"Το λεωφορείο μεταφέρει πολλούς ανθρώπους.","fact_en":"A bus carries many people."},
+    {"gr":"Τρένο","en":"Train","symbol":"🚆","fact_gr":"Το τρένο κινείται πάνω σε ράγες.","fact_en":"A train travels on rails."},
+    {"gr":"Αεροπλάνο","en":"Airplane","symbol":"✈️","fact_gr":"Το αεροπλάνο πετά στον ουρανό.","fact_en":"An airplane flies in the sky."},
+    {"gr":"Ελικόπτερο","en":"Helicopter","symbol":"🚁","fact_gr":"Το ελικόπτερο πετά με έλικες.","fact_en":"A helicopter flies with rotors."},
+    {"gr":"Πλοίο","en":"Ship","symbol":"🚢","fact_gr":"Το πλοίο ταξιδεύει στη θάλασσα.","fact_en":"A ship travels on the sea."},
+    {"gr":"Βάρκα","en":"Boat","symbol":"⛵","fact_gr":"Η βάρκα κινείται στο νερό.","fact_en":"A boat moves on water."},
+    {"gr":"Ποδήλατο","en":"Bicycle","symbol":"🚲","fact_gr":"Το ποδήλατο κινείται με πετάλια.","fact_en":"A bicycle moves with pedals."},
+    {"gr":"Μοτοσικλέτα","en":"Motorcycle","symbol":"🏍️","fact_gr":"Η μοτοσικλέτα έχει δύο τροχούς.","fact_en":"A motorcycle has two wheels."},
+    {"gr":"Ασθενοφόρο","en":"Ambulance","symbol":"🚑","fact_gr":"Το ασθενοφόρο βοηθά ανθρώπους που χρειάζονται γιατρό.","fact_en":"An ambulance helps people who need a doctor."}
 ]
 
 var index := 0
@@ -23,11 +23,11 @@ var grid: GridContainer
 func _ready() -> void:
     _build()
     _rebuild_grid()
-    _show_instrument()
+    _show_vehicle()
 
 func _build() -> void:
     var background := ColorRect.new()
-    background.color = Color("#f4f0ff")
+    background.color = Color("#eef8ff")
     background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
     add_child(background)
 
@@ -41,13 +41,13 @@ func _build() -> void:
     top.add_child(top_row)
 
     var back := Button.new()
-    back.text = "← Το Σώμα μου"
-    back.custom_minimum_size = Vector2(190, 50)
-    back.pressed.connect(func(): get_tree().change_scene_to_file("res://body_parts.tscn"))
+    back.text = "← Μουσικά Όργανα"
+    back.custom_minimum_size = Vector2(220, 50)
+    back.pressed.connect(func(): get_tree().change_scene_to_file("res://instruments.tscn"))
     top_row.add_child(back)
 
     var title := Label.new()
-    title.text = "Μουσικά Όργανα"
+    title.text = "Ο Κόσμος των Οχημάτων"
     title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
     title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     title.add_theme_font_size_override("font_size", 30)
@@ -121,9 +121,9 @@ func _build() -> void:
     column.add_child(hear)
 
     var quiz := Button.new()
-    quiz.text = "❓ Κουίζ οργάνων"
+    quiz.text = "❓ Κουίζ οχημάτων"
     quiz.custom_minimum_size = Vector2(280, 58)
-    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://instruments_quiz.tscn"))
+    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://vehicles_quiz.tscn"))
     column.add_child(quiz)
 
     var nav := HBoxContainer.new()
@@ -142,27 +142,21 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
-    var vehicles_button := Button.new()
-    vehicles_button.text = "🚗 Οχήματα"
-    vehicles_button.custom_minimum_size = Vector2(280, 58)
-    vehicles_button.pressed.connect(func(): get_tree().change_scene_to_file("res://vehicles.tscn"))
-    column.add_child(vehicles_button)
-
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
 
-    for i in range(instruments.size()):
+    for i in range(vehicles.size()):
         var button := Button.new()
-        var text := instruments[i]["gr"] if language == "el" else instruments[i]["en"]
-        button.text = instruments[i]["symbol"] + "\n" + text
+        var text := vehicles[i]["gr"] if language == "el" else vehicles[i]["en"]
+        button.text = vehicles[i]["symbol"] + "\n" + text
         button.custom_minimum_size = Vector2(150, 90)
         button.add_theme_font_size_override("font_size", 20)
-        button.pressed.connect(func(chosen=i): index = chosen; _show_instrument())
+        button.pressed.connect(func(chosen=i): index = chosen; _show_vehicle())
         grid.add_child(button)
 
-func _show_instrument() -> void:
-    var item = instruments[index]
+func _show_vehicle() -> void:
+    var item = vehicles[index]
     symbol_label.text = item["symbol"]
 
     if language == "el":
@@ -175,21 +169,21 @@ func _show_instrument() -> void:
 func _set_language(value: String) -> void:
     language = value
     _rebuild_grid()
-    _show_instrument()
+    _show_vehicle()
 
 func _previous() -> void:
-    index = (index - 1 + instruments.size()) % instruments.size()
-    _show_instrument()
+    index = (index - 1 + vehicles.size()) % vehicles.size()
+    _show_vehicle()
 
 func _next() -> void:
-    index = (index + 1) % instruments.size()
-    _show_instrument()
+    index = (index + 1) % vehicles.size()
+    _show_vehicle()
 
 func _speak_current() -> void:
     if not DisplayServer.has_feature(DisplayServer.FEATURE_TEXT_TO_SPEECH):
         return
 
-    var item = instruments[index]
+    var item = vehicles[index]
     var text := item["gr"] + ". " + item["fact_gr"] if language == "el" else item["en"] + ". " + item["fact_en"]
     var voices := DisplayServer.tts_get_voices_for_language(language)
 
