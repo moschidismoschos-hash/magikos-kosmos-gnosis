@@ -156,6 +156,12 @@ func _build() -> void:
     math_game.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_math.tscn"))
     column.add_child(math_game)
 
+    var song := Button.new()
+    song.text = "🎵 Τραγουδάκι αριθμών"
+    song.custom_minimum_size = Vector2(280, 58)
+    song.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_song.tscn"))
+    column.add_child(song)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
