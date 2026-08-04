@@ -184,6 +184,12 @@ func _build() -> void:
     memory.pressed.connect(func(): get_tree().change_scene_to_file("res://zoo_memory.tscn"))
     actions.add_child(memory)
 
+    var sounds := Button.new()
+    sounds.text = "🔊 Ήχοι"
+    sounds.custom_minimum_size = Vector2(160, 58)
+    sounds.pressed.connect(func(): get_tree().change_scene_to_file("res://zoo_sounds.tscn"))
+    actions.add_child(sounds)
+
 func _show_animal(index: int) -> void:
     selected_index = index
     var animal = animals[index]
