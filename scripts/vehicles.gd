@@ -142,6 +142,12 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
+    var animals_button := Button.new()
+    animals_button.text = "🐾 Ζώα από Α έως Ω"
+    animals_button.custom_minimum_size = Vector2(280, 58)
+    animals_button.pressed.connect(func(): get_tree().change_scene_to_file("res://animals_alphabet.tscn"))
+    column.add_child(animals_button)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
