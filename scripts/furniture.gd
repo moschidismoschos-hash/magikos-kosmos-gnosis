@@ -152,6 +152,12 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
+    var countries_button := Button.new()
+    countries_button.text = "🌍 Χώρες και Σημαίες"
+    countries_button.custom_minimum_size = Vector2(280, 58)
+    countries_button.pressed.connect(func(): get_tree().change_scene_to_file("res://countries.tscn"))
+    column.add_child(countries_button)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
