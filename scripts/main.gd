@@ -236,6 +236,10 @@ func _show_map() -> void:
     map_layer.visible = true
 
 func _open_place(action: String) -> void:
+    if action == "school":
+        get_tree().change_scene_to_file("res://alphabet.tscn")
+        return
+
     if action == "zoo":
         get_tree().change_scene_to_file("res://zoo.tscn")
         return
