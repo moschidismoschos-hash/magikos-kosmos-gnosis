@@ -126,6 +126,12 @@ func _build() -> void:
     writing.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_writing.tscn"))
     column.add_child(writing)
 
+    var quiz := Button.new()
+    quiz.text = "❓ Κουίζ αριθμών"
+    quiz.custom_minimum_size = Vector2(280, 58)
+    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_quiz.tscn"))
+    column.add_child(quiz)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
