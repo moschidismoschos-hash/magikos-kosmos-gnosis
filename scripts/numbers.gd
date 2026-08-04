@@ -138,6 +138,12 @@ func _build() -> void:
     missing.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_missing.tscn"))
     column.add_child(missing)
 
+    var order_game := Button.new()
+    order_game.text = "🔢 Βάλε τους αριθμούς στη σειρά"
+    order_game.custom_minimum_size = Vector2(280, 58)
+    order_game.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_order.tscn"))
+    column.add_child(order_game)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
