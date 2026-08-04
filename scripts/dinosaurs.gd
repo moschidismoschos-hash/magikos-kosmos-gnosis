@@ -153,6 +153,12 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
+    var space_button := Button.new()
+    space_button.text = "🚀 Διάστημα"
+    space_button.custom_minimum_size = Vector2(290, 58)
+    space_button.pressed.connect(func(): get_tree().change_scene_to_file("res://space.tscn"))
+    column.add_child(space_button)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
