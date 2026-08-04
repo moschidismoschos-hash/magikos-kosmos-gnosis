@@ -178,6 +178,12 @@ func _build() -> void:
     quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://zoo_quiz.tscn"))
     actions.add_child(quiz)
 
+    var memory := Button.new()
+    memory.text = "🧠 Μνήμη"
+    memory.custom_minimum_size = Vector2(160, 58)
+    memory.pressed.connect(func(): get_tree().change_scene_to_file("res://zoo_memory.tscn"))
+    actions.add_child(memory)
+
 func _show_animal(index: int) -> void:
     selected_index = index
     var animal = animals[index]
