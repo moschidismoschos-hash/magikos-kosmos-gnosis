@@ -132,6 +132,12 @@ func _build() -> void:
     quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_quiz.tscn"))
     column.add_child(quiz)
 
+    var missing := Button.new()
+    missing.text = "❓ Ποιος αριθμός λείπει;"
+    missing.custom_minimum_size = Vector2(280, 58)
+    missing.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_missing.tscn"))
+    column.add_child(missing)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
