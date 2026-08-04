@@ -172,6 +172,12 @@ func _build() -> void:
     coloring.pressed.connect(func(): get_tree().change_scene_to_file("res://zoo_coloring.tscn"))
     actions.add_child(coloring)
 
+    var quiz := Button.new()
+    quiz.text = "❓ Κουίζ"
+    quiz.custom_minimum_size = Vector2(160, 58)
+    quiz.pressed.connect(func(): get_tree().change_scene_to_file("res://zoo_quiz.tscn"))
+    actions.add_child(quiz)
+
 func _show_animal(index: int) -> void:
     selected_index = index
     var animal = animals[index]
