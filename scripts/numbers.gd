@@ -114,6 +114,12 @@ func _build() -> void:
     next.pressed.connect(_next)
     nav.add_child(next)
 
+    var counting := Button.new()
+    counting.text = "🍎 Μέτρησε αντικείμενα"
+    counting.custom_minimum_size = Vector2(280, 58)
+    counting.pressed.connect(func(): get_tree().change_scene_to_file("res://numbers_counting.tscn"))
+    column.add_child(counting)
+
 func _rebuild_grid() -> void:
     for child in grid.get_children():
         child.queue_free()
