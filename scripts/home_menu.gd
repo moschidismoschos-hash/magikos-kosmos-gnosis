@@ -71,7 +71,7 @@ func _build_header() -> void:
     titles.add_child(title)
 
     var subtitle := Label.new()
-    subtitle.text = "Εξερεύνησε • Μάθε • Διασκέδασε"
+    subtitle.text = "ΝΕΑ ΕΚΔΟΣΗ APK 2 • Εξερεύνησε • Μάθε • Διασκέδασε"
     subtitle.add_theme_font_size_override("font_size", 20)
     subtitle.add_theme_color_override("font_color", Color("#e7e5ff"))
     titles.add_child(subtitle)

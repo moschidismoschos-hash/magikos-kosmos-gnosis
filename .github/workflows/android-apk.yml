@@ -1,0 +1,67 @@
+name: Δημιουργία APK Αντρόιντ
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.gd"
+      - "**/*.tscn"
+      - "project.godot"
+      - "export_presets.cfg"
+      - ".github/workflows/android-apk.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3
+
+    steps:
+      - name: Λήψη έργου
+        uses: actions/checkout@v4
+
+      - name: Καθαρισμός προσωρινών αρχείων
+        run: |
+          rm -rf .godot
+          rm -rf build/android
+          mkdir -p build/android
+
+      - name: Δημιουργία δοκιμαστικού κλειδιού
+        run: |
+          rm -f debug.keystore
+          keytool -genkeypair \
+            -keystore debug.keystore \
+            -storepass android \
+            -alias androiddebugkey \
+            -keypass android \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=GR"
+
+      - name: Εισαγωγή αρχείων έργου
+        run: |
+          godot --headless --editor --quit --path .
+
+      - name: Επιβεβαίωση νέας αρχικής οθόνης
+        run: |
+          grep 'run/main_scene="res://home_menu.tscn"' project.godot
+          grep 'ΝΕΑ ΕΚΔΟΣΗ APK 2' scripts/home_menu.gd
+
+      - name: Κατασκευή APK
+        run: |
+          godot --headless --path . --export-debug "Android APK" build/android/MagikosKosmosGnosis-v2.apk
+          test -f build/android/MagikosKosmosGnosis-v2.apk
+
+      - name: Ανέβασμα APK για λήψη
+        uses: actions/upload-artifact@v4
+        with:
+          name: MagikosKosmosGnosis-APK-v2
+          path: build/android/MagikosKosmosGnosis-v2.apk
+          if-no-files-found: error
+          retention-days: 30
