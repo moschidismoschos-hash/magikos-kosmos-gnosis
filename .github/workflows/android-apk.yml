@@ -92,6 +92,10 @@ jobs:
           grep 'ΝΕΑ ΕΚΔΟΣΗ APK 2' scripts/home_menu.gd
 
       - name: Κατασκευή APK
+        env:
+          GODOT_ANDROID_KEYSTORE_DEBUG_PATH: ${{ github.workspace }}/debug.keystore
+          GODOT_ANDROID_KEYSTORE_DEBUG_USER: androiddebugkey
+          GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: android
         run: |
           echo "Έλεγχος προφίλ εξαγωγής:"
           cat export_presets.cfg
