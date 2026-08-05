@@ -3,8 +3,7 @@ name: Δημιουργία APK Αντρόιντ
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
       - "**/*.gd"
       - "**/*.tscn"
@@ -25,30 +24,49 @@ jobs:
       - name: Λήψη έργου
         uses: actions/checkout@v4
 
-      - name: Καθαρισμός προσωρινών αρχείων
+      - name: Προετοιμασία
         run: |
-          rm -rf .godot
-          rm -rf build/android
+          rm -rf .godot build/android
           mkdir -p build/android
+          mkdir -p "$HOME/.local/share/godot/export_templates"
+          mkdir -p "$HOME/.config/godot"
 
-      - name: Δημιουργία δοκιμαστικού κλειδιού
+      - name: Πρότυπα εξαγωγής
         run: |
-          rm -f debug.keystore
-          keytool -genkeypair \
-            -keystore debug.keystore \
-            -storepass android \
-            -alias androiddebugkey \
-            -keypass android \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 10000 \
-            -dname "CN=Android Debug,O=Android,C=GR"
+          SRC="/root/.local/share/godot/export_templates/4.3.stable"
+          DST="$HOME/.local/share/godot/export_templates/4.3.stable"
+          test -d "$SRC"
+          rm -rf "$DST"
+          cp -r "$SRC" "$DST"
+          test -f "$DST/android_debug.apk"
+          test -f "$DST/android_release.apk"
 
-      - name: Εισαγωγή αρχείων έργου
+      - name: Ρύθμιση Java και Android SDK
+        shell: bash
         run: |
-          godot --headless --editor --quit --path .
+          JAVA_PATH="$(dirname "$(dirname "$(readlink -f "$(command -v javac)")")")"
+          ANDROID_PATH="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          test -d "$JAVA_PATH/bin"
+          test -d "$ANDROID_PATH"
+          cat > "$HOME/.config/godot/editor_settings-4.tres" <<SETTINGS
+          [gd_resource format=3]
 
-      - name: Επιβεβαίωση νέας αρχικής οθόνης
+          [resource]
+          export/android/java_sdk_path = "$JAVA_PATH"
+          export/android/android_sdk_path = "$ANDROID_PATH"
+          export/android/debug_keystore = "$(pwd)/debug.keystore"
+          export/android/debug_keystore_user = "androiddebugkey"
+          export/android/debug_keystore_pass = "android"
+          SETTINGS
+
+      - name: Δημιουργία κλειδιού
+        run: |
+          keytool -genkeypair -keystore debug.keystore -storepass android             -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048             -validity 10000 -dname "CN=Android Debug,O=Android,C=GR"
+
+      - name: Εισαγωγή έργου
+        run: godot --headless --editor --quit --path .
+
+      - name: Έλεγχος νέας αρχικής
         run: |
           grep 'run/main_scene="res://home_menu.tscn"' project.godot
           grep 'ΝΕΑ ΕΚΔΟΣΗ APK 2' scripts/home_menu.gd
@@ -58,7 +76,7 @@ jobs:
           godot --headless --path . --export-debug "Android APK" build/android/MagikosKosmosGnosis-v2.apk
           test -f build/android/MagikosKosmosGnosis-v2.apk
 
-      - name: Ανέβασμα APK για λήψη
+      - name: Ανέβασμα APK
         uses: actions/upload-artifact@v4
         with:
           name: MagikosKosmosGnosis-APK-v2
