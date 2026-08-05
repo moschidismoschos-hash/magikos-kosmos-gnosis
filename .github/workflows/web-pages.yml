@@ -32,9 +32,19 @@ jobs:
           mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/4.3.stable ~/.local/share/godot/export_templates/4.3.stable
 
-      - name: Έλεγχος και εισαγωγή αρχείων
+      - name: Καθαρισμός παλιάς προσωρινής μνήμης
         run: |
-          godot --headless --editor --quit
+          rm -rf .godot
+          rm -rf build/web
+
+      - name: Νέα εισαγωγή όλων των αρχείων
+        run: |
+          godot --headless --editor --quit --path .
+
+      - name: Επιβεβαίωση αρχικής σκηνής
+        run: |
+          grep 'run/main_scene="res://home_menu.tscn"' project.godot
+          grep 'ΜΑΓΙΚΟΣ ΚΟΣΜΟΣ ΓΝΩΣΗΣ' scripts/home_menu.gd
 
       - name: Δημιουργία έκδοσης ιστού
         run: |
