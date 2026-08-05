@@ -17,56 +17,76 @@ permissions:
 jobs:
   build-apk:
     runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:4.3
 
     steps:
       - name: Λήψη έργου
         uses: actions/checkout@v4
 
-      - name: Προετοιμασία
+      - name: Εγκατάσταση Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Εγκατάσταση Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Εγκατάσταση εργαλείων Android
         run: |
-          rm -rf .godot build/android
-          mkdir -p build/android
-          mkdir -p "$HOME/.local/share/godot/export_templates"
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+
+      - name: Εγκατάσταση Godot 4.3
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.3.0
+          use-dotnet: false
+          include-templates: false
+
+      - name: Εγκατάσταση προτύπων εξαγωγής Godot
+        run: |
+          mkdir -p "$HOME/.local/share/godot/export_templates/4.3.stable"
+          curl -L -o /tmp/templates.tpz \
+            "https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz"
+          unzip -q /tmp/templates.tpz -d /tmp/godot-templates
+          cp -r /tmp/godot-templates/templates/. "$HOME/.local/share/godot/export_templates/4.3.stable/"
+          test -f "$HOME/.local/share/godot/export_templates/4.3.stable/android_debug.apk"
+          test -f "$HOME/.local/share/godot/export_templates/4.3.stable/android_release.apk"
+
+      - name: Ρύθμιση Godot για Android
+        run: |
           mkdir -p "$HOME/.config/godot"
-
-      - name: Πρότυπα εξαγωγής
-        run: |
-          SRC="/root/.local/share/godot/export_templates/4.3.stable"
-          DST="$HOME/.local/share/godot/export_templates/4.3.stable"
-          test -d "$SRC"
-          rm -rf "$DST"
-          cp -r "$SRC" "$DST"
-          test -f "$DST/android_debug.apk"
-          test -f "$DST/android_release.apk"
-
-      - name: Ρύθμιση Java και Android SDK
-        shell: bash
-        run: |
-          JAVA_PATH="$(dirname "$(dirname "$(readlink -f "$(command -v javac)")")")"
-          ANDROID_PATH="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
-          test -d "$JAVA_PATH/bin"
-          test -d "$ANDROID_PATH"
           cat > "$HOME/.config/godot/editor_settings-4.tres" <<SETTINGS
           [gd_resource format=3]
 
           [resource]
-          export/android/java_sdk_path = "$JAVA_PATH"
-          export/android/android_sdk_path = "$ANDROID_PATH"
+          export/android/java_sdk_path = "$JAVA_HOME"
+          export/android/android_sdk_path = "$ANDROID_HOME"
           export/android/debug_keystore = "$(pwd)/debug.keystore"
           export/android/debug_keystore_user = "androiddebugkey"
           export/android/debug_keystore_pass = "android"
           SETTINGS
 
-      - name: Δημιουργία κλειδιού
+      - name: Δημιουργία κλειδιού εγκατάστασης
         run: |
-          keytool -genkeypair -keystore debug.keystore -storepass android             -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048             -validity 10000 -dname "CN=Android Debug,O=Android,C=GR"
+          rm -f debug.keystore
+          keytool -genkeypair \
+            -keystore debug.keystore \
+            -storepass android \
+            -alias androiddebugkey \
+            -keypass android \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=GR"
 
-      - name: Εισαγωγή έργου
-        run: godot --headless --editor --quit --path .
+      - name: Καθαρισμός και εισαγωγή έργου
+        run: |
+          rm -rf .godot build/android
+          mkdir -p build/android
+          godot --headless --editor --quit --path .
 
-      - name: Έλεγχος νέας αρχικής
+      - name: Έλεγχος νέας αρχικής οθόνης
         run: |
           grep 'run/main_scene="res://home_menu.tscn"' project.godot
           grep 'ΝΕΑ ΕΚΔΟΣΗ APK 2' scripts/home_menu.gd
@@ -75,8 +95,9 @@ jobs:
         run: |
           godot --headless --path . --export-debug "Android APK" build/android/MagikosKosmosGnosis-v2.apk
           test -f build/android/MagikosKosmosGnosis-v2.apk
+          ls -lh build/android/MagikosKosmosGnosis-v2.apk
 
-      - name: Ανέβασμα APK
+      - name: Ανέβασμα APK για λήψη
         uses: actions/upload-artifact@v4
         with:
           name: MagikosKosmosGnosis-APK-v2
