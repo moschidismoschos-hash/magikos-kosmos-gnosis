@@ -48,8 +48,8 @@ jobs:
 
       - name: Δημιουργία έκδοσης ιστού
         run: |
-          mkdir -p build/web
-          godot --headless --export-release "Web" build/web/index.html
+          mkdir -p build/web/nea-ekdosi
+          godot --headless --export-release "Web" build/web/nea-ekdosi/index.html
           touch build/web/.nojekyll
 
       - name: Ανέβασμα αρχείων Σελίδων
