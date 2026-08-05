@@ -93,7 +93,10 @@ jobs:
 
       - name: Κατασκευή APK
         run: |
-          godot --headless --path . --export-debug "Android APK" build/android/MagikosKosmosGnosis-v2.apk
+          echo "Έλεγχος προφίλ εξαγωγής:"
+          cat export_presets.cfg
+          echo
+          godot --headless --verbose --path . --export-debug "Android APK" build/android/MagikosKosmosGnosis-v2.apk
           test -f build/android/MagikosKosmosGnosis-v2.apk
           ls -lh build/android/MagikosKosmosGnosis-v2.apk
 
